@@ -84,7 +84,8 @@ cdef inline double rand_uniform(double low, double high,
 cdef SIZE_t weighted_sampling(SIZE_t* feature_ind, DOUBLE_t* feature_weight,
                               SIZE_t head, SIZE_t jump,
                               SIZE_t low, SIZE_t high, UINT32_t* random_state) nogil:
-     """Generate a weighted sample from [low, head) or [head+jump, high+jump)."""
+     """Generate a weighted sample from [low, head) or [head+jump, high+jump) 
+        then subtracting jump if it is from the second interval."""
      cdef double prob_sum = 0
      cdef SIZE_t i = low
      cdef double key = 0
@@ -106,7 +107,10 @@ cdef SIZE_t weighted_sampling(SIZE_t* feature_ind, DOUBLE_t* feature_weight,
                  i += jump
              step += feature_weight[feature_ind[i]]
              i += 1
-         return i - 1
+         i -= 1
+         if i >= head + jump:
+             i -= jump
+         return i
 
 cdef inline double log(double x) nogil:
     return ln(x) / ln(2.0)
