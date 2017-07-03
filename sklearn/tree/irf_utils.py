@@ -1069,7 +1069,9 @@ def run_iRF(X_train,
     stability_score = _get_stability_score(
         all_rit_bootstrap_output=all_rit_bootstrap_output)
 
-    return all_rf_weights, all_K_iter_rf_data, all_rf_bootstrap_output, all_rit_bootstrap_output, stability_score
+    return all_rf_weights,\
+        all_K_iter_rf_data, all_rf_bootstrap_output,\
+        all_rit_bootstrap_output, stability_score
 
 
 def _hist_features(all_rf_tree_data, n_estimators,
